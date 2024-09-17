@@ -1,4 +1,0 @@
-pip install django-mdeditor
-python -m pip install Pillow
-pip install jazmin
-pip install Markdown
