@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="banner">
+    <div class="banner_all">
+        <div class="banner_p">
+            <p>About us</p>
+            <p>Auto Haul Express LLC: We are your personal concierge of vehicle logistics with one mission: <br> <i style="font-size: 20px;">“Vehicle shipping made easy, fast and reliable at affordable prices”.</i></p>
+        </div>
+        <form id="myForm" action method="post" autocomplete="off"
+            class="inputs">
+            {% csrf_token %}
+
+            <div class="tab" id="tab-1">
+                <h1 align="center">Location</h1>
+                <div style="position: relative;">
+                    <input type="text" name="pick_up_location"
+                        class="form-control" placeholder="Pick up ZIP or CITY"
+                        required id="pickup_input">
+                    <ul class="list" id="pickup_list"></ul>
+                </div>
+
+                <div style="position: relative;">
+                    <input type="text" name="delivery_location"
+                        class="form-control" placeholder="Delivery ZIP or CITY"
+                        required id="delivery_input">
+                    <ul class="list" id="delivery_list"></ul>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="open_enclosed" style="font-weight: bold; float: left; font-size: 80%;"><span style="color: red">*</span> Transport type</label>
+                    <div class="f_radio" style>
+                        <div class>
+                            <input type="radio" id="open" name="open_enclosed"
+                                value="open" class="form-check-input"
+                                style="font-size: 1px;" checked>
+                            <label for="open"
+                                class="form-check-label text-black"
+                                style="display: inline; margin-left: 2px; color: black;">Open</label>
+                        </div>
+                        <div class style="margin-left: 10px;">
+                            <input type="radio" id="enclosed"
+                                name="open_enclosed" value="enclosed"
+                                class="form-check-input"
+                                style="font-size: 5px;">
+                            <label for="enclosed" class
+                                style="display: inline; margin-left: 2px; color: black;">Enclosed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="index-btn" onclick="run(1, 2);">Next</div>
+            </div>
+
+            <div class="tab" id="tab-2">
+                <h1 align="center">Vehicle Details:</h1>
+
+                <select class="form-control" name="make" id="make" required>
+                    <option value disabled selected>Choose make</option>
+                    {% for make in form.make.field.queryset %}
+                    <option value="{{ make.pk }}">{{ make.name }}</option>
+                    {% endfor %}
+                </select>
+                <select class="form-control" name="model" id="model" required>
+                    <option value disabled selected>Choose model</option>
+                </select>
+                <select class="form-control" name="year" id="year" required>
+                    <option value disabled selected>Choose year</option>
+                    {% for year in form.year.field.queryset %}
+                    <option value="{{ year.pk }}">{{ year.year }}</option>
+                    {% endfor %}
+                </select>
+
+                <div class style="display: flex;">
+                    <div class="index-btn" onclick="run(2, 1);">Previous</div>
+                    <div class="index-btn" onclick="run(2, 3);">Next</div>
+                </div>
+            </div>
+
+            <div class="tab" id="tab-3">
+                <h1 align="center">Personal Details:</h1>
+                <input type="text" name="name" class="form-control"
+                    placeholder="Full name" required>
+                <input type="email" name="email" class="form-control"
+                    placeholder="Email" required>
+                <input type="text" name="phone_number" id="phone_number"
+                    class="form-control" placeholder="Phone number" required>
+                <input type="date" name="date" class="form-control"
+                    placeholder="Date" required>
+                <div class="" style="display: flex; " >
+                    <input type="checkbox" name="condition" id="condition" style="float: left; margin-bottom: auto" class="form-check-input">
+                <label for="condition" class="" style="float: right; text-align: start; margin-left: 10px">I agree to receive text massages from  Auto Haul Express LLC. Stay in the loop! Receive exclusive updates via SMS. MSG & data rates may apply. Reply 'STOP' to unsubscribe.
+                    <br><a href="#">Privacy Policy</a></label>
+                </div>
+
+                <div class="index-btn-wrapper">
+                    <div class="index-btn" onclick="run(3, 2);">Previous</div>
+                    <button class="index-btn" type="submit" name="submit"
+                        style="background: blue;">Submit</button>
+                </div>
+            </div>
+            <br>
+            <div style="text-align:center;">
+                <span class="step" id="step-1">1</span>
+                <span class="step" id="step-2">2</span>
+                <span class="step" id="step-3">3</span>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
