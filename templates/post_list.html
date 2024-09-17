@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load static %}
+
+{% block title %}Posts{% endblock %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="latest_posts" style="margin-top: 90px; background: white">
+    <h2>All <span style="color: #0085FF">Posts</span></h2>
+    <br>
+    <div class="lp_cards-wrapper container">
+        {% for post in posts %}
+        <div class="lp_cards fade-up">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }} class=" img-fluid post-image mb-4"">
+            {% else %}
+            <p style="font-size: 25px;">No Image</p>
+            {% endif %}
+
+            <div class="lp_content">
+                <p class="lp_title">
+                    {{ post.title|slice:":1"|upper }}{{ post.title|slice:"1:"|lower }}
+                </p>
+                <div class="lp_icons">
+                    <div class="icon-item">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p>{{ post.user.username }}</p>
+                    </div>
+                    <div class="icon-item">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <p>{{ post.publish|date:"F j, Y" }}</p>
+                    </div>
+                </div>
+                <p class="lp_description">
+                    {{ post.body|markdown|slice:":150" }}...
+                </p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-primary post-btn">Read More</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No posts available.</p>
+        {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for page_num in posts.paginator.page_range %}
+            {% if posts.number == page_num %}
+            <li class="page-item active">
+                <a class="page-link" href="#">{{ page_num }} <span class="sr-only">(current)</span></a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ posts.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</section>
+
+
+{% endblock %}
+

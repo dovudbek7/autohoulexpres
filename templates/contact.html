@@ -1,10 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contact{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="banner">
+    <div class="banner_all">
+        <div class="banner_p fade-up">
+            <p>Contact Us</p>
+            <p>Here at Auto Haul Express LLC, we strive to go above and beyond
+                for each and every one of our clients. If you have any
+                inquiries regarding our services or require assistance with a
+                transit, please don't hesitate to contact AutoHoulEx.
+                You can reach us via phone, email, or the following contact
+                form.</p>
+        </div>
+        <form id="myForm" action method="post" autocomplete="off"
+              class="inputs fade-up">
+            {% csrf_token %}
+
+            <div class="tab" id="tab-1">
+                <h1 align="center">Location</h1>
+                <div style="position: relative;">
+                    <input type="text" name="pick_up_location"
+                           class="form-control" placeholder="Pick up ZIP or CITY"
+                           required id="pickup_input">
+                    <ul class="list" id="pickup_list"
+                        style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+                </div>
+
+                <div style="position: relative;">
+                    <input type="text" name="delivery_location"
+                           class="form-control" placeholder="Delivery ZIP or CITY"
+                           required id="delivery_input">
+                    <ul class="list" id="delivery_list"
+                        style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="open_enclosed"
+                           style="font-weight: bold; float: left; font-size: 80%;"><span
+                            style="color: red">*</span> Transport type</label>
+                    <div class="f_radio" style>
+                        <div class>
+                            <input type="radio" id="open" name="open_enclosed"
+                                   value="open" class="form-check-input"
+                                   style="font-size: 1px;" checked>
+                            <label for="open"
+                                   class="form-check-label text-black"
+                                   style="display: inline; margin-left: 2px; color: black;">Open</label>
+                        </div>
+                        <div class style="margin-left: 10px;">
+                            <input type="radio" id="enclosed"
+                                   name="open_enclosed" value="enclosed"
+                                   class="form-check-input"
+                                   style="font-size: 5px;">
+                            <label for="enclosed" class
+                                   style="display: inline; margin-left: 2px; color: black;">Enclosed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="index-btn" onclick="run(1, 2);">Next</div>
+            </div>
+
+            <div class="tab" id="tab-2">
+                <h1 align="center">Vehicle Details:</h1>
+
+                <div class="autocomplete-container">
+                    <input type="text" name="make" id="make" placeholder="Type or select a make" class="form-control"
+                           required>
+                    <div id="make-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <div class="autocomplete-container">
+                    <input type="text" name="model" id="model" placeholder="Type or select a model" class="form-control"
+                           required>
+                    <div id="model-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <div class="autocomplete-container">
+                    <input type="text" name="year" id="year" placeholder="Type or select a year" class="form-control"
+                           required>
+                    <div id="year-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="operable" style="font-weight: 700; float: left; font-size: 80%; margin-left: 10px">Is it
+                        operable?</label>
+                    <div class="f_radio">
+                        <div style="margin-right: 10px;">
+                            <input type="radio" id="yes" name="operable" value="yes" class="form-check-input" checked>
+                            <label for="yes" class="form-check-label text-black" style="margin-left: 5px;">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="no" name="operable" value="no" class="form-check-input">
+                            <label for="no" class="form-check-label text-black" style="margin-left: 5px;">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class style="display: flex;">
+                    <div class="index-btn" onclick="run(2, 1);">Previous</div>
+                    <div class="index-btn" onclick="run(2, 3);">Next</div>
+                </div>
+            </div>
+
+            <div class="tab" id="tab-3">
+                <h1 align="center">Personal Details:</h1>
+                <input type="text" name="name" class="form-control"
+                       placeholder="Full name" required>
+                <input type="email" name="email" class="form-control"
+                       placeholder="Email" required>
+                <input type="text" name="phone_number" id="phone_number"
+                       class="form-control phone_number" placeholder="Phone number"
+                       required>
+                <input type="date" name="date" class="form-control"
+                       placeholder="Date" required>
+                <div class style="display: flex;">
+                    <input type="checkbox" name="condition" id="condition"
+                           style="float: left; margin-bottom: auto"
+                           class="form-check-input">
+                    <label for="condition" class
+                           style="float: right; text-align: start; margin-left: 10px">I
+                        agree to receive text massages from Auto Haul Express
+                        LLC. Stay in the loop! Receive exclusive updates via
+                        SMS. MSG & data rates may apply. Reply 'STOP' to
+                        unsubscribe.
+                        <br><a href="{% url 'auto:policy' %}">Privacy
+                            Policy</a></label>
+                </div>
+
+                <div class="index-btn-wrapper">
+                    <div class="index-btn" onclick="run(3, 2);">Previous</div>
+                    <button class="index-btn" type="submit"
+                            style="background: blue;">Submit
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div style="text-align:center;">
+                <span class="step" id="step-1">1</span>
+                <span class="step" id="step-2">2</span>
+                <span class="step" id="step-3">3</span>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<div class="container c_container">
+    <div class="contact_p fade-up">
+        <p>Contact Us</p>
+        <p>We’d love to hear from you</p>
+        <span>Our friendly team is always here to chat</span>
+    </div>
+    <div class="contact_cards fade-up">
+        <div class="c_card fade-up">
+            <div>
+                <i class="fa fa-comments" aria-hidden="true"></i>
+            </div>
+            <p>Chat for Support</p>
+            <span>We’re here to help</span>
+            <p>autohoulex@gmail.com</p>
+        </div>
+        <div class="c_card fade-up">
+            <div>
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <p>Visit us</p>
+            <span>Visit our office</span>
+            <p>6023 Ruby Way, Nine Mile Falls, <br> WA 99026, United States</p>
+        </div>
+        <div class="c_card">
+            <div>
+                <i class="fa fa-phone" aria-hidden="true"></i>
+            </div>
+            <p>Call us</p>
+            <span>Mon-Fri from 8 a.m to 5 p.m</span>
+            <p>+1(888) 888 2525</p>
+        </div>
+    </div>
+</div>
+
+<div class="contact-section">
+    <div class="contact-container">
+        <div class="contact-form">
+            <h2 class="fade-up">Get in touch</h2>
+            <p class="fade-up">Our friendly team would love to hear from
+                you.</p>
+            <form method="POST" class="fade-up">
+                {% csrf_token %}
+
+                <div class="form-group fade-up">
+                    <input type="text" name="contact-full_name"
+                           id="id_contact_full_name" class="form-control"
+                           placeholder="Full name"
+                           value="{{ contact_form.full_name.value|default_if_none:'' }}"
+                           required>
+                </div>
+
+                <div class="form-group fade-up">
+                    <input type="email" name="contact-email"
+                           id="id_contact_email" class="form-control"
+                           placeholder="Email"
+                           value="{{ contact_form.email.value|default_if_none:'' }}"
+                           required>
+                </div>
+
+                <div class="form-group fade-up">
+                    <input type="text" name="contact-phone"
+                           id="id_contact_phone" class="form-control phone_number"
+                           placeholder="Phone"
+                           value="{{ contact_form.phone.value|default_if_none:'' }}"
+                           required>
+                </div>
+
+                <div class="form-group fade-up">
+                    <textarea name="contact-message" id="id_contact_message"
+                              class="form-control" placeholder="Leave us a message..."
+                              rows="4"
+                              required>{{ contact_form.message.value|default_if_none:'' }}</textarea>
+                </div>
+                <br>
+                <button type="submit" name="submit_contact"
+                        class="btn btn-primary fade-up">Send Message
+                </button>
+            </form>
+        </div>
+        <div class="contact-map fade-up">
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2679.231773408734!2d-117.57570368784141!3d47.8157258710897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549e04542619c54f%3A0x8ff1c6fe84bc2f8f!2s6023%20Ruby%20Way%2C%20Nine%20Mile%20Falls%2C%20WA%2099026%2C%20USA!5e0!3m2!1sen!2s!4v1726117983553!5m2!1sen!2s"
+                    frameborder="0" allowfullscreen aria-hidden="false"
+                    tabindex="0">
+            </iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

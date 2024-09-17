@@ -1,10 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
 
-</body>
-</html>
+{% block title %}Privacy Policy{% endblock %}
+{% block extra_css %}
+<style>
+    .privacy-policy {
+        padding: 2rem;
+        background-color: #f9f9f9;
+        margin-top: 130px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        width: 90%;
+    }
+
+    .privacy-title {
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .privacy-text {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        color: #232323;
+    }
+
+    @media (max-width: 768px) {
+        .privacy-policy {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="privacy-policy container">
+    <h1 class="privacy-title">Privacy Policy</h1>
+    <p class="privacy-text">
+        Thank you for visiting Auto Haul Express LLC. Your privacy is our priority, and we are fully committed to
+        safeguarding your personal information. This Privacy Policy outlines how we collect, use, and protect the
+        information you share when visiting our website.
+    </p>
+    <p class="privacy-text">
+        By using our site autohaulex.com, you agree to the terms detailed in this Privacy Policy:
+    </p>
+
+    <h2 class="privacy-title">1. Information We Collect:</h2>
+    <p class="privacy-text">
+        We may collect both personally identifiable information (PII) and non-personally identifiable information
+        (Non-PII) when you interact with our website. This may include, but is not limited to:
+    </p>
+    <ul class="privacy-text">
+        <li>Contact details (name, email address)</li>
+        <li>Demographic data</li>
+        <li>Usage data (pages visited, time on site)</li>
+        <li>Information relevant to surveys and offers</li>
+    </ul>
+
+    <h2 class="privacy-title">2. How We Use Your Information:</h2>
+    <p class="privacy-text">
+        The information collected may be used to:
+    </p>
+    <ul class="privacy-text">
+        <li>Provide and personalize our services</li>
+        <li>Enhance our website and improve user experience</li>
+        <li>Respond to your questions and requests</li>
+        <li>Send promotional materials on new services, offers, or other updates of interest</li>
+        <li>Tailor website content to match your preferences</li>
+    </ul>
+
+    <h2 class="privacy-title">3. Opt-In for SMS Communication:</h2>
+    <p class="privacy-text">
+        You have replied "unstop" and will begin receiving messages again from this number. To stop receiving messages,
+        text "stop." If you previously replied with "stop," all texts from this number are blocked. Text "unstop" to
+        resume receiving messages.
+    </p>
+
+    <h2 class="privacy-title">4. Sharing Your Information:</h2>
+    <p class="privacy-text">
+        We do not sell or trade your personal information for marketing purposes. We may, however, share your
+        information with trusted partners who help operate our website or assist in serving you, provided they agree to
+        maintain the confidentiality of this information.
+    </p>
+
+    <h2 class="privacy-title">5. Security:</h2>
+    <p class="privacy-text">
+        We take your security seriously and have implemented physical, electronic, and managerial safeguards to protect
+        the information you provide.
+    </p>
+
+    <h2 class="privacy-title">6. Changes to this Privacy Policy:</h2>
+    <p class="privacy-text">
+        Auto Haul Express LLC may revise this Privacy Policy from time to time. All changes will be posted on this page,
+        with the date of the last update clearly indicated.
+    </p>
+
+    <h2 class="privacy-title">7. Contact Us:</h2>
+    <p class="privacy-text">
+        For any questions or concerns regarding this Privacy Policy, please reach out to us at <a
+            href="mailto:support@autohaulex.com">support@autohaulex.com</a>.
+    </p>
+</div>
+{% endblock %}

@@ -1,1 +1,109 @@
-<h1>asdjn</h1>
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %}Page Not Found 4o40{% endblock %}
+
+{% block extra_css %}
+    <style>
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: 'Arvo', serif;
+	margin-top: 70px;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+  color: #1852bc;
+	font-weight: 800;
+}
+
+.contant_box_404 {
+  margin-top: -30px;
+}
+
+.contant_box_404 h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.contant_box_404 p {
+  font-size: 18px;
+}
+
+.link_404 {
+  color: #fff;
+  padding: 10px 20px;
+  background: #1541ed;
+  margin: 20px 0;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .four_zero_four_bg h1 {
+    font-size: 60px;
+  }
+
+  .contant_box_404 h3 {
+    font-size: 20px;
+  }
+
+  .contant_box_404 p {
+    font-size: 16px;
+  }
+
+  .link_404 {
+    padding: 8px 16px;
+  }
+}
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<section class="page_404 fade-up">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 text-center">
+        <div class="four_zero_four_bg">
+          <h1 class="text-center">404</h1>
+        </div>
+        <div class="contant_box_404">
+          <h3 class="h2">Look like you're lost</h3>
+          <p>The page you are looking for is not available!</p>
+          <a href="{% url 'auto:home' %}" class="btn btn-primary link_404">Go to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+
+</script>
+
+
+
+{% endblock %}

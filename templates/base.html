@@ -1,10 +1,489 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/logo.PNG' %}" type="image/x-icon">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
+          rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel='stylesheet'
+          href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    {% block extra_css %}{% endblock %}
 </head>
+
 <body>
-$END$
+
+
+<!--    Preloader-->
+<div id="preloader">
+    <div class="sk-three-bounce">
+        <div class="sk-child sk-bounce1"></div>
+        <div class="sk-child sk-bounce2"></div>
+        <div class="sk-child sk-bounce3"></div>
+    </div>
+</div>
+
+<!-- Navigation -->
+<div id="header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="navbar-brand d-block d-lg-none" href="#">
+                <a href="{% url 'auto:home' %}">
+                    <img src="{% static 'img/logo.PNG' %}" width="100" alt>
+                </a>
+            </div>
+            <button class="navbar-toggler navbar_toggle" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link " aria-current="page"
+                                            href="{% url 'auto:home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'auto:services' %}">Our Services</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            href="{% url 'auto:gallery' %}">Our Gallery</a></li>
+                </ul>
+                <div class="navbar-brand d-none d-lg-block" href="#">
+                    <a href="{% url 'auto:home' %}">
+                        <h2 class="logo center-logo">
+                            <img src="{% static 'img/logo.PNG'%}" width="100" alt>
+                        </h2>
+                    </a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'auto:post_list' %}">Our Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'auto:about' %}">About
+                        Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'auto:contact' %}">Contact
+                        Us</a></li>
+                    <a href="{% url 'auto:quote' %}" class="btn btn-primary call-btns ">Get a quote</a>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+<div class="headline">
+
+    {% block content %}
+    {% endblock %}
+</div>
+
+<div id="notification-container"></div>
+
+<div class="call-btn">
+    <div class="zoomIn"></div>
+    <div class="pulse"></div>
+
+    <div class="tada">
+        <a href="tel:+12819756026" style="color: white"><i
+                class='bx bx-phone-call'></i></a>
+    </div>
+</div>
+
+
+
+<!-- Site footer -->
+<footer class="site-footer">
+    <div class="container fade-up">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <h6>Auto Haul Express LLC</h6>
+                <p class="text-justify">Disclaimer: All pictures of equipment are meant for general reference and do not
+                    imply automatic use of that equipment. US Car-Go Freight operates as a brokerage working with a
+                    vetted group of contracted drivers. If you would like to view pictures of the equipment being used
+                    for your specific transport, please be sure to request those from your US Car-Go Freight
+                    representative.</p>
+            </div>
+
+            <div class="col-xs-6 col-md-4">
+                <h6>Contacts</h6>
+                <ul class="footer-links">
+                    <li class="f_contact" style="display: flex">
+                        <div><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                        <p>6023 Ruby Way, Nine Mile Falls, WA 99026, United States</p>
+                    </li>
+                    <li class="f_contact" style="display: flex">
+                        <div><i class="fa fa-phone" aria-hidden="true"></i></div>
+                        <p>(281) 975-6026</p>
+                    </li>
+                    <li class="f_contact" style="display: flex">
+                        <div><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                        <p>autohoulex@gmail.com</p>
+                    </li>
+                    <li class="f_contact" style="display: flex">
+                        <div><i class='bx bx-timer'></i></div>
+                        <p>Mon - Fri: 8am - 7pm ESTSat - Sun: 9am - 5pm</p>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-xs-6 col-md-2">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="{% url 'auto:home' %}">Home</a></li>
+                    <li><a href="{% url 'auto:about' %}">About Us</a></li>
+                    <li><a href="{% url 'auto:post_list' %}">Blogs</a></li>
+                    <li><a href="{% url 'auto:services' %}">Services</a></li>
+                    <li><a href="{% url 'auto:policy' %}">Privacy Policy </a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container ">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                    <li><a class="facebook" href="#"><i class='bx bxl-facebook'></i></a></li>
+                    <li><a class="instagram" href="#"><i class='bx bxl-instagram'></i></a></li>
+                    <li><a class="twitter" href="#">X</a></li>
+                    <li><a class="linkedin" href="#"><i class='bx bxl-linkedin'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+{% if not show_quote_button %}
+<a href="{% url 'auto:quote' %}" class="get_quote_button" id="getQuoteButton">FREE Quote!</a>
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="{% static 'js/js.js' %}"></script>
+<script
+        src='https://cdn.jsdelivr.net/npm/bootstrap-multi-steps-component@1.2.0/dist/bootstrap-multi-steps-component.min.js'></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+        $(document).ready(function () {
+        function fetchSuggestions(url, inputId, suggestionsId, additionalData = {}) {
+            var inputValue = $(inputId).val().trim();
+
+            $.ajax({
+                url: url,
+                data: $.extend({'query': inputValue}, additionalData),
+                success: function (data) {
+                    var suggestionsContainer = $(suggestionsId);
+                    suggestionsContainer.empty();
+
+                    data.suggestions.forEach(function (item) {
+                        suggestionsContainer.append('<div class="autocomplete-suggestion" data-id="' + item.id + '">' + item.name + '</div>');
+                    });
+
+                    if (data.suggestions.length > 0) {
+                        suggestionsContainer.show();
+                    } else {
+                        suggestionsContainer.hide();
+                    }
+                },
+                error: function () {
+                    console.error("Failed to fetch suggestions.");
+                }
+            });
+        }
+
+        function setupAutocomplete(inputId, suggestionsId, fetchUrl, relatedInputId = null, relatedFetchUrl = null) {
+            $(inputId).on('focus', function () {
+                // Close other suggestion containers
+                $('.autocomplete-suggestions').not(suggestionsId).hide();
+
+                if (relatedInputId) {
+                    var relatedInputValue = $(relatedInputId).val().trim();
+                    if (relatedInputValue) {
+                        fetchSuggestions(fetchUrl, inputId, suggestionsId, {'make_id': $(relatedInputId).data('id')});
+                    } else {
+                        $(suggestionsId).hide();
+                    }
+                } else {
+                    fetchSuggestions(fetchUrl, inputId, suggestionsId, {'all_suggestions': true});
+                }
+            });
+
+            $(inputId).on('input', function () {
+                if (relatedInputId) {
+                    var relatedInputValue = $(relatedInputId).val().trim();
+                    if (relatedInputValue) {
+                        fetchSuggestions(fetchUrl, inputId, suggestionsId, {'make_id': $(relatedInputId).data('id')});
+                    }
+                } else {
+                    fetchSuggestions(fetchUrl, inputId, suggestionsId);
+                }
+            });
+
+            $(document).on('click', suggestionsId + ' .autocomplete-suggestion', function () {
+                var selectedText = $(this).text();
+                var selectedId = $(this).data('id');
+
+                $(inputId).val(selectedText);
+                $(inputId).data('id', selectedId);
+                $(suggestionsId).hide();
+            });
+
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('.autocomplete-container').length) {
+                    $('.autocomplete-suggestions').hide();
+                }
+            });
+        }
+
+        setupAutocomplete('#make', '#make-suggestions', '{% url "auto:fetch_make" %}');
+
+        setupAutocomplete('#model', '#model-suggestions', '{% url "auto:fetch_model" %}', '#make');
+
+        setupAutocomplete('#year', '#year-suggestions', '{% url "auto:fetch_year" %}');
+    });
+
+    const pickupInput = document.getElementById("pickup_input");
+    const deliveryInput = document.getElementById("delivery_input");
+
+    const zipCodesUrl = "{% static 'zip_codes.json' %}";
+
+    async function filterLocations(input, listId) {
+        const filter = input.value.toLowerCase();
+
+        try {
+            const response = await fetch(`${zipCodesUrl}?v=${new Date().getTime()}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch the JSON file.");
+            }
+            const data = await response.json();
+
+            const filteredLocations = data.filter(location => location.toLowerCase().includes(filter));
+            displayMatches(filteredLocations, listId);
+        } catch (error) {
+            console.error("Error fetching or filtering locations:", error);
+        }
+    }
+
+    function displayMatches(matches, listId) {
+        const listElement = document.getElementById(listId);
+        listElement.innerHTML = "";
+
+        if (matches.length > 0) {
+            matches.forEach(match => {
+                const li = document.createElement("li");
+                li.textContent = match;
+                li.classList.add("autocomplete-suggestion");
+                li.addEventListener("click", function () {
+                    document.getElementById(listId.replace("_list", "_input")).value = match;
+                    listElement.innerHTML = "";
+                });
+                listElement.appendChild(li);
+            });
+            listElement.style.display = "block";
+        } else {
+            const li = document.createElement("li");
+            li.textContent = "No results found";
+            li.classList.add("autocomplete-suggestion");
+            listElement.appendChild(li);
+            listElement.style.display = "block";
+        }
+    }
+
+    if (pickupInput) {
+        pickupInput.addEventListener("input", function () {
+            filterLocations(this, "pickup_list");
+        });
+    }
+
+    if (deliveryInput) {
+        deliveryInput.addEventListener("input", function () {
+            filterLocations(this, "delivery_list");
+        });
+    }
+
+    document.addEventListener("click", function (e) {
+        if (pickupInput && !pickupInput.contains(e.target) && !document.getElementById("pickup_list").contains(e.target)) {
+            document.getElementById("pickup_list").style.display = 'none';
+        }
+        if (deliveryInput && !deliveryInput.contains(e.target) && !document.getElementById("delivery_list").contains(e.target)) {
+            document.getElementById("delivery_list").style.display = 'none';
+        }
+    });
+
+        jQuery(window).on("load", function () {
+        $('#preloader').fadeOut(500);
+        $('#main-wrapper').addClass('show');
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        ScrollReveal().reveal('.fade-up', {
+            distance: '50px',
+            duration: 700,
+            easing: 'ease-in-out',
+            origin: 'bottom',
+            opacity: 0,
+            reset: true
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const names = [
+            "Martha", "John", "Sophia", "Alex", "Michael", "Olivia", "Emma", "Daniel", "Ava", "James",
+            "Isabella", "William", "Mia", "Benjamin", "Charlotte", "Ethan", "Amelia", "Lucas", "Harper",
+            "Oliver", "Ella", "Jacob", "Grace", "Henry", "Chloe", "Liam", "Evelyn", "Jackson", "Abigail",
+            "Mason", "Avery", "Sebastian", "Sofia", "Jack", "Lily", "Aiden", "Aria", "Samuel", "Zoe",
+            "David", "Nora", "Joseph", "Mila", "Carter", "Aubrey", "Matthew", "Eleanor", "Wyatt", "Hannah",
+            "Gabriel", "Luna", "Isaiah", "Addison", "Luke", "Stella", "Jackson", "Ella", "Andrew", "Zara",
+            "Caleb", "Skylar", "Ryan", "Alice", "Dylan", "Paige", "Jaxon", "Samantha", "Nathan", "Ariana",
+            "Isaac", "Camila", "Hunter", "Ivy", "Christian", "Madison", "Joshua", "Riley", "Jasper", "Lila",
+            "Gage", "Nina", "Max", "Lola", "Elijah", "Sadie", "Lincoln", "Peyton", "Connor", "Hazel",
+            "Luis", "Ruth", "Adrian", "Naomi", "Eli", "Elena", "Robert", "Maya", "Charles", "Vivian",
+            "Jonah", "Clara", "Miles", "Emery", "Gavin", "Cora", "Roman", "Sierra", "Leo", "Alyssa",
+            "Ezekiel", "Lydia", "Asher", "Willow", "Dominic", "Jade", "Derek", "Eloise", "Chase", "Blake",
+            "Brody", "Nadia", "Jeremiah", "Mckenna", "Owen", "Freya", "Silas", "Aurora", "Theo", "Addison",
+            "Emmett", "Sophie", "Sawyer", "Penelope", "Leo", "Maeve", "Alexis", "Gianna", "Riley", "Nora",
+            "Jameson", "Lily", "Bennett", "Arianna", "Carlos", "Eliana", "Gage", "Natalie", "Graham", "Lucy",
+            "Zachary", "Kinsley", "Maddox", "Piper", "Seth", "Maya", "Antonio", "Maya", "Mackenzie", "Morgan",
+            "Nolan", "Sadie", "Julian", "Bella", "Gage", "Addison", "Weston", "Leah", "Tristan", "Sage",
+            "Waylon", "Hannah", "Maddox", "Ellie", "Davis", "Holly", "Jax", "Alyssa", "Cohen", "Zoe",
+            "Rory", "Ellie", "Jason", "Peyton", "Grayson", "Nina", "Leo", "Gianna", "Dylan", "Fiona",
+            "Gavin", "Lucy", "Brody", "Norah", "Adam", "Riley", "Sebastian", "Ella", "Levi", "Harper",
+            "Jaxon", "Piper", "Maxwell", "Cora", "Jace", "Aurora", "Cole", "Zara", "Jordan", "Ivy",
+            "Harrison", "Sienna", "Ryker", "Everly", "Tyler", "Samantha", "Milo", "Molly", "Dean", "Madeline",
+            "Bryson", "Alice", "Graham", "Rose", "Nolan", "Mila", "Ryder", "Ariana", "Ezra", "Layla",
+            "Wesley", "Allison", "Waylon", "Jasmine", "Nico", "Natalie", "Hudson", "Piper", "Owen", "Sophia",
+            "Cameron", "Jasmine", "Nicholas", "Paige", "Josiah", "Willow", "Eli", "Catherine", "Ezekiel", "Emery",
+            "Hudson", "Juliana", "Jack", "Lila", "Reid", "Alyssa", "Xander", "Quinn", "Kai", "Aria",
+            "Rylan", "Vivian", "Caden", "Holly", "Gage", "Maya", "Colton", "Camila", "Bennett", "Eliza",
+            "Micah", "Claire", "Knox", "Norah", "Austin", "Ellie", "Kai", "Ivy", "Ethan", "Fiona",
+            "Jace", "Addison", "Nash", "Charlotte", "Liam", "Emery", "Jackson", "Isla", "Julian", "Violet",
+            "Gage", "Emilia", "Colton", "Scarlett", "Ryan", "Sienna", "Zane", "Aria", "Sage", "Nora",
+            "Brock", "Ellie", "Eli", "Eloise", "Nash", "Luna", "Ethan", "Hazel", "Henry", "Lydia",
+            "Asher", "Eleanor", "Kaden", "Addison", "Silas", "Sophia", "Theo", "Penelope", "Hudson", "Sage",
+            "Derek", "Nova", "Jaxon", "Ivy", "Carson", "Mia", "Levi", "Quinn", "Sawyer", "Grace",
+            "Bentley", "Emily", "Emmett", "Ivy", "Mateo", "Clara", "Camden", "Zara", "Max", "Gianna",
+            "Jesse", "Peyton", "Gage", "Harper", "Oliver", "Cora", "Roman", "Mila", "Isaiah", "Arianna",
+            "Josiah", "Eleanor", "Dylan", "Mackenzie", "Owen", "Zoe", "Lincoln", "Kinsley", "Easton", "Avery",
+            "Xander", "Emilia", "Austin", "Scarlett", "Ryker", "Madeline", "Gavin", "Sophie", "Jaxon", "Layla"
+        ];
+
+        const locations = [
+            "New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX", "Phoenix, AZ",
+            "Philadelphia, PA", "San Antonio, TX", "San Diego, CA", "Dallas, TX", "San Jose, CA",
+            "Austin, TX", "Jacksonville, FL", "San Francisco, CA", "Indianapolis, IN", "Columbus, OH",
+            "Fort Worth, TX", "Charlotte, NC", "Detroit, MI", "El Paso, TX", "Memphis, TN",
+            "Baltimore, MD", "Boston, MA", "Seattle, WA", "Denver, CO", "Washington, DC",
+            "Nashville, TN", "Louisville, KY", "Milwaukee, WI", "Portland, OR", "Las Vegas, NV",
+            "Oklahoma City, OK", "Tucson, AZ", "Atlanta, GA", "Colorado Springs, CO", "Raleigh, NC",
+            "Miami, FL", "Cleveland, OH", "Tulsa, OK", "Oakland, CA", "Minneapolis, MN",
+            "Wichita, KS", "Arlington, TX", "Bakersfield, CA", "Aurora, CO", "Honolulu, HI",
+            "Anaheim, CA", "Riverside, CA", "Corpus Christi, TX", "Lexington, KY", "Stockton, CA",
+            "Henderson, NV", "Saint Paul, MN", "Cincinnati, OH", "St. Louis, MO", "Pittsburgh, PA",
+            "Greensboro, NC", "Anchorage, AK", "Plano, TX", "Orlando, FL", "Irvine, CA",
+            "Newark, NJ", "Toledo, OH", "Durham, NC", "Chula Vista, CA", "Fort Wayne, IN",
+            "Jersey City, NJ", "St. Petersburg, FL", "Laredo, TX", "Buffalo, NY", "Madison, WI",
+            "Lubbock, TX", "Chandler, AZ", "Scottsdale, AZ", "Glendale, AZ", "Reno, NV",
+            "Baton Rouge, LA", "Boise, ID", "San Bernardino, CA", "Birmingham, AL", "Modesto, CA",
+            "Des Moines, IA", "Richmond, VA", "Mobile, AL", "Fargo, ND", "Charleston, SC",
+            "Fayetteville, NC", "Akron, OH", "Shreveport, LA", "Yonkers, NY", "Augusta, GA",
+            "Tacoma, WA", "Evansville, IN", "Springfield, MO", "Tempe, AZ", "Santa Ana, CA",
+            "Cary, NC", "Waco, TX", "Tallahassee, FL", "Visalia, CA", "Chattanooga, TN",
+            "Killeen, TX", "Burlington, VT", "Odessa, TX", "Fresno, CA", "Hialeah, FL",
+            "Macon, GA", "Cedar Rapids, IA", "Columbia, SC", "Springfield, IL", "Santa Clara, CA",
+            "Huntsville, AL", "Wilmington, DE", "Oshkosh, WI", "Salinas, CA", "Syracuse, NY",
+            "Beaumont, TX", "Clovis, NM", "Pueblo, CO", "Kennewick, WA", "Greeley, CO",
+            "Waterbury, CT", "Rochester, NY", "Danville, VA", "Green Bay, WI", "Sioux Falls, SD",
+            "Jackson, MS", "Montgomery, AL", "Minot, ND", "Dothan, AL", "Albany, NY",
+            "Joplin, MO", "Napa, CA", "Lansing, MI", "Grand Rapids, MI", "West Palm Beach, FL",
+            "Indianapolis, IN", "Kalamazoo, MI", "Huntington, WV", "Gulfport, MS", "Corpus Christi, TX",
+            "Brownsville, TX", "Lawton, OK", "Myrtle Beach, SC", "Cape Coral, FL", "Lakewood, CO",
+            "Daytona Beach, FL", "Gainesville, FL", "Shreveport, LA", "Elkhart, IN", "Oklahoma City, OK",
+            "Torrance, CA", "Cleveland, OH", "Grand Prairie, TX", "Fargo, ND", "Albany, NY",
+            "Lynchburg, VA", "Newport News, VA", "Macon, GA", "Billings, MT", "Aberdeen, SD",
+            "Wichita Falls, TX", "Duluth, MN", "Warwick, RI", "Bowling Green, KY", "Bend, OR",
+            "Gulfport, MS", "Reno, NV", "College Station, TX", "Boulder, CO", "Tucson, AZ",
+            "Bellingham, WA", "Lansing, MI", "Fargo, ND", "Springfield, IL", "Jackson, MS",
+            "Salem, OR", "St. George, UT", "Yuma, AZ", "Mount Pleasant, SC", "Rapid City, SD",
+            "Sherman, TX", "Nacogdoches, TX", "Elko, NV", "Durango, CO", "Sioux City, IA",
+            "McAllen, TX", "Kennewick, WA", "Goldsboro, NC", "Fairfield, CA", "Pocatello, ID",
+            "Junction City, KS", "Dover, DE", "Augusta, ME", "Newburgh, NY", "Hagerstown, MD",
+            "Barre, VT", "Pittsfield, MA", "Eau Claire, WI", "Grand Forks, ND", "La Crosse, WI",
+            "Macon, GA", "Huntsville, AL", "Beaumont, TX", "Bozeman, MT", "Morgantown, WV"
+        ];
+
+        function generateNotification() {
+            const name = names[Math.floor(Math.random() * names.length)];
+            const location = locations[Math.floor(Math.random() * locations.length)];
+            const hoursAgo = Math.floor(Math.random() * 24) + 1;
+            const timeText = `${hoursAgo} hours ago`;
+
+            // Create notification HTML
+            const notification = document.createElement("div");
+            notification.classList.add("notification");
+            notification.innerHTML = `
+            <img src="{% static 'img/logo.PNG' %}" alt="User Image">
+            <div class="text">
+                <div class="name">${name} from ${location}</div>
+                <div class="notif_body">Just booked an order</div>
+                <div class="order-time">${timeText}</div>
+            </div>
+            <button class="close-btn">X</button>
+        `;
+
+            const container = document.getElementById("notification-container");
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add("show");
+            }, 100);
+
+            setTimeout(() => hideNotification(notification), 5000);
+
+            const closeButton = notification.querySelector('.close-btn');
+            closeButton.addEventListener('click', () => hideNotification(notification));
+        }
+
+        function hideNotification(notification) {
+            notification.classList.add("hide");
+            setTimeout(() => notification.remove(), 500);
+        }
+
+        setTimeout(generateNotification, 20000);
+
+        function randomNotificationIntervals() {
+            const randomInterval = Math.floor(Math.random() * 40000) + 1000;
+            setTimeout(() => {
+                generateNotification();
+                randomNotificationIntervals();
+            }, randomInterval);
+        }
+
+        randomNotificationIntervals();
+    });
+</script>
+
+{% block extra_js %}
+{% endblock %}
+
 </body>
+
 </html>

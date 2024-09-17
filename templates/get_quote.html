@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %}Quote{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/get_quote.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<form id="myForm" action method="post" autocomplete="off" class="form-container fade-up" style="margin-top: 130px">
+    {% csrf_token %}
+
+    <div class="tab" id="tab-1">
+        <h1>Location</h1>
+        <div style="position: relative;">
+            <input type="text" name="pick_up_location"
+                   class="form-control" placeholder="Pick up ZIP or CITY"
+                   required id="pickup_input">
+            <ul class="list" id="pickup_list"
+                style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+        </div>
+
+        <div style="position: relative;">
+            <input type="text" name="delivery_location"
+                   class="form-control" placeholder="Delivery ZIP or CITY"
+                   required id="delivery_input">
+            <ul class="list" id="delivery_list"
+                style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+        </div>
+        <div class="form-group">
+            <label for="open_enclosed">Transport type <span class="required">*</span></label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" id="open" name="open_enclosed" value="open" class="form-check-input" checked>
+                    Open
+                </label>
+                <label class="radio-label">
+                    <input type="radio" id="enclosed" name="open_enclosed" value="enclosed" class="form-check-input">
+                    Enclosed
+                </label>
+            </div>
+        </div>
+        <div class="button-group">
+            <button type="button" class="btn-next" onclick="run(1, 2);">Next</button>
+        </div>
+    </div>
+
+
+    <div class="tab" id="tab-2">
+        <h1>Vehicle Details</h1>
+        <div class="autocomplete-container">
+            <input type="text" name="make" id="make" placeholder="Type or select a make" class="form-control" required>
+            <div id="make-suggestions" class="autocomplete-suggestions"></div>
+        </div>
+
+        <!-- Input for model -->
+        <div class="autocomplete-container">
+            <input type="text" name="model" id="model" placeholder="Type or select a model" class="form-control"
+                   required>
+            <div id="model-suggestions" class="autocomplete-suggestions"></div>
+        </div>
+
+        <!-- Input for year -->
+        <div class="autocomplete-container">
+            <input type="text" name="year" id="year" placeholder="Type or select a year" class="form-control" required>
+            <div id="year-suggestions" class="autocomplete-suggestions"></div>
+        </div>
+        <div class="form-group" style="margin-top: 15px">
+            <label for="operable" style="font-weight: 700; float: left; font-size: 80%; margin-left: 10px">Is it
+                operable?</label>
+            <div class="f_radio">
+                <div style="margin-right: 10px;">
+                    <input type="radio" id="yes" name="operable" value="yes" class="form-check-input" checked>
+                    <label for="yes" class="form-check-label text-black" style="margin-left: 5px;">Yes</label>
+                </div>
+                <div>
+                    <input type="radio" id="no" name="operable" value="no" class="form-check-input">
+                    <label for="no" class="form-check-label text-black" style="margin-left: 5px;">No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="btn-prev" onclick="run(2, 1);">Previous</button>
+            <button type="button" class="btn-next" onclick="run(2, 3);">Next</button>
+        </div>
+    </div>
+
+    <div class="tab" id="tab-3">
+        <h1>Personal Details</h1>
+        <input type="text" name="name" class="form-control" placeholder="Full name" required>
+        <input type="email" name="email" class="form-control" placeholder="Email" required>
+        <input type="text" name="phone_number" class="form-control phone_number" placeholder="Phone number "
+               id="phone_number" required>
+        <input type="date" name="date" class="form-control" placeholder="Date" required>
+        <div class="checkbox-group">
+            <input type="checkbox" name="condition" style="margin-bottom: auto" id="condition" class="form-check-input">
+            <label for="condition">I agree to receive text massages from Auto Haul Express LLC. Stay in the loop!
+                Receive exclusive updates via SMS. MSG & data rates may apply. Reply 'STOP' to unsubscribe.<a
+                        href="{% url 'auto:policy' %}">Privacy Policy</a></label>
+        </div>
+        <div class="button-group">
+            <button type="button" class="btn-prev" onclick="run(3, 2);">Previous</button>
+            <button class="btn-submit" type="submit" name="submit">Submit</button>
+        </div>
+    </div>
+
+    <div class="steps-indicator ">
+        <span class="step" id="step-1">1</span>
+        <span class="step" id="step-2">2</span>
+        <span class="step" id="step-3">3</span>
+    </div>
+</form>
+
+
+{% endblock %}

@@ -1,41 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}About Us{% endblock %}
+
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
 {% endblock %}
 
-
-
 {% block content %}
-    <div class="banner">
+
+<div class="banner">
     <div class="banner_all">
-        <div class="banner_p">
+        <div class="banner_p fade-up">
             <p>About us</p>
-            <p>Auto Haul Express LLC: We are your personal concierge of vehicle logistics with one mission: <br> <i style="font-size: 20px;">“Vehicle shipping made easy, fast and reliable at affordable prices”.</i></p>
+            <p>Auto Haul Express LLC: We are your personal concierge of vehicle
+                logistics with one mission: <br> <i
+                    style="font-size: 20px;">“Vehicle shipping made easy, fast
+                    and reliable at affordable prices”.</i></p>
         </div>
         <form id="myForm" action method="post" autocomplete="off"
-            class="inputs">
+            class="inputs fade-up">
             {% csrf_token %}
 
             <div class="tab" id="tab-1">
                 <h1 align="center">Location</h1>
                 <div style="position: relative;">
-                    <input type="text" name="pick_up_location"
-                        class="form-control" placeholder="Pick up ZIP or CITY"
-                        required id="pickup_input">
-                    <ul class="list" id="pickup_list"></ul>
-                </div>
+                <input type="text" name="pick_up_location"
+                    class="form-control" placeholder="Pick up ZIP or CITY"
+                    required id="pickup_input">
+                <ul class="list" id="pickup_list" style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+            </div>
 
-                <div style="position: relative;">
-                    <input type="text" name="delivery_location"
-                        class="form-control" placeholder="Delivery ZIP or CITY"
-                        required id="delivery_input">
-                    <ul class="list" id="delivery_list"></ul>
-                </div>
+            <div style="position: relative;">
+                <input type="text" name="delivery_location"
+                    class="form-control" placeholder="Delivery ZIP or CITY"
+                    required id="delivery_input">
+                <ul class="list" id="delivery_list" style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+            </div>
 
                 <div class="form-group" style="margin-top: 15px">
-                    <label for="open_enclosed" style="font-weight: bold; float: left; font-size: 80%;"><span style="color: red">*</span> Transport type</label>
+                    <label for="open_enclosed"
+                        style="font-weight: bold; float: left; font-size: 80%;"><span
+                            style="color: red">*</span> Transport type</label>
                     <div class="f_radio" style>
                         <div class>
                             <input type="radio" id="open" name="open_enclosed"
@@ -62,21 +68,35 @@
             <div class="tab" id="tab-2">
                 <h1 align="center">Vehicle Details:</h1>
 
-                <select class="form-control" name="make" id="make" required>
-                    <option value disabled selected>Choose make</option>
-                    {% for make in form.make.field.queryset %}
-                    <option value="{{ make.pk }}">{{ make.name }}</option>
-                    {% endfor %}
-                </select>
-                <select class="form-control" name="model" id="model" required>
-                    <option value disabled selected>Choose model</option>
-                </select>
-                <select class="form-control" name="year" id="year" required>
-                    <option value disabled selected>Choose year</option>
-                    {% for year in form.year.field.queryset %}
-                    <option value="{{ year.pk }}">{{ year.year }}</option>
-                    {% endfor %}
-                </select>
+                <div class="autocomplete-container">
+                    <input type="text" name="make" id="make" placeholder="Type or select a make" class="form-control" required>
+                    <div id="make-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <!-- Input for model -->
+                <div class="autocomplete-container">
+                    <input type="text" name="model" id="model" placeholder="Type or select a model" class="form-control" required>
+                    <div id="model-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <!-- Input for year -->
+                <div class="autocomplete-container">
+                    <input type="text" name="year" id="year" placeholder="Type or select a year" class="form-control" required>
+                    <div id="year-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="operable" style="font-weight: 700; float: left; font-size: 80%; margin-left: 10px">Is it operable?</label>
+                    <div class="f_radio">
+                        <div style="margin-right: 10px;">
+                            <input type="radio" id="yes" name="operable" value="yes" class="form-check-input" checked>
+                            <label for="yes" class="form-check-label text-black" style="margin-left: 5px;">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="no" name="operable" value="no" class="form-check-input">
+                            <label for="no" class="form-check-label text-black" style="margin-left: 5px;">No</label>
+                        </div>
+                    </div>
+                </div>
 
                 <div class style="display: flex;">
                     <div class="index-btn" onclick="run(2, 1);">Previous</div>
@@ -91,13 +111,22 @@
                 <input type="email" name="email" class="form-control"
                     placeholder="Email" required>
                 <input type="text" name="phone_number" id="phone_number"
-                    class="form-control" placeholder="Phone number" required>
+                    class="form-control phone_number" placeholder="Phone number"
+                    required>
                 <input type="date" name="date" class="form-control"
                     placeholder="Date" required>
-                <div class="" style="display: flex; " >
-                    <input type="checkbox" name="condition" id="condition" style="float: left; margin-bottom: auto" class="form-check-input">
-                <label for="condition" class="" style="float: right; text-align: start; margin-left: 10px">I agree to receive text massages from  Auto Haul Express LLC. Stay in the loop! Receive exclusive updates via SMS. MSG & data rates may apply. Reply 'STOP' to unsubscribe.
-                    <br><a href="#">Privacy Policy</a></label>
+                <div class style="display: flex; ">
+                    <input type="checkbox" name="condition" id="condition"
+                        style="float: left; margin-bottom: auto"
+                        class="form-check-input">
+                    <label for="condition" class
+                        style="float: right; text-align: start; margin-left: 10px">I
+                        agree to receive text massages from Auto Haul Express
+                        LLC. Stay in the loop! Receive exclusive updates via
+                        SMS. MSG & data rates may apply. Reply 'STOP' to
+                        unsubscribe.
+                        <br><a href="{% url 'auto:policy' %}">Privacy
+                            Policy</a></label>
                 </div>
 
                 <div class="index-btn-wrapper">
@@ -117,4 +146,254 @@
 
 </div>
 
+<div class="first_section container fade-up">
+    <p>About<span style="color: #0085ff">AutoHaulExpres Transport Inc</span></p>
+    <p>AutoHoulEx Transport Inc has grown to one of the largest auto transport
+        companies in the country in less than five years! The most important
+        features of an auto transport company</p>
+</div>
+
+<div class="container third_section">
+    <br>
+    <div class="third_card fade-up">
+        <img src="{% static 'img/Discounts.jpg' %}" class="fade-up" >
+        <div class="fade-up">
+            <p>Discounts</p>
+            <span>Finding a company that offers discounts helps you save money.
+                Look for discounts that include our Military,
+                First Responders, Seniors, Students, Return Customers, and Early
+                Bird discounts.</span>
+
+        </div>
+
+    </div>
+    <div class="third_card third_c_r fade-up">
+        <div class="fade-up">
+            <p>Insurance</p>
+            <span>It’s critical that a broker validates that a carrier that is
+                used to ship a vehicle has the required basic insurance to
+                protect your vehicle.</span>
+
+        </div>
+        <br>
+        <img src="{% static 'img/Insurance.jpg' %}" class="fade-up" >
+    </div>
+    <div class="third_card fade-up">
+        <img src="{% static 'img/Afta-gap.jpg' %}" class="fade-up" >
+        <div class="fade-up">
+            <p>AFTA GAP Protection</p>
+            <span>A carrier’s regular insurance may not protect your vehicle
+                from all damage and inconvenience that can happen during
+                shipment. AFTA
+                GAP Protection offers superior protection over the carrier’s
+                basic insurance and gives you peace of mind when shipping one of
+                your greatest assets.</span>
+
+        </div>
+
+    </div>
+    <div class="third_card third_c_r fade-up">
+        <div class="fade-up">
+            <p>No Deposit</p>
+            <span>Be wary of companies that ask for money up-front. Reputable
+                companies will only take a deposit
+                after a carrier has been secured for you and you’ve agreed to
+                the shipping price.</span>
+
+        </div>
+
+        <br>
+        <img src="{% static 'img/No-deposit.png' %}" class="fade-up" >
+    </div>
+    <div class="third_card fade-up">
+        <img src="{% static 'img/Afta-gap.jpg' %}" class="fade-up" >
+        <div class="fade-up">
+            <p>High Review Ratings</p>
+            <span>The level of customer service separates you from a nightmare
+                shipping experience to
+                everything being seamless and worry-free. Customer reviews and
+                surveys are good indicators of who you can trust, especially the
+                Google reviews.</span>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="fourth_section">
+    <div class="container">
+        <p class="fade-up"><span style="color: #0085FF">Schedule</span> your car shipment with
+            AutoHaulExpres Transport Inc</p>
+
+        <div class="cards-wrapper">
+            <div class="fourth_card fade-up">
+                <img src="{% static 'img/adress_info.jpg' %}" alt>
+                <div>
+                    <p>Address Info</p>
+                    <span class>Pick up and drop off addresses</span>
+                </div>
+            </div>
+
+            <div class="fourth_card fade-up">
+                <img src="{% static 'img/vehicle.jpg' %}" alt>
+                <div>
+                    <p>Vehicle Info</p>
+                    <span>Choose your car's make and model</span>
+                </div>
+            </div>
+
+            <div class="fourth_card fade-up">
+                <img src="{% static 'img/driver.jpg' %}" alt>
+                <div>
+                    <p>Driver Info</p>
+                    <span>We will provide you with the driver's info</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="f_express fade-up">Experience <span>hassle-free scheduling</span> with our
+        top-rated car transport service.</p>
+</div>
+
+<div class="clients fade-up container">
+    <p>What Our <span class="highlight">Clients Say!</span></p>
+    <div class="clients-wrapper">
+        <div class="client-review">
+            <p class="client-name">Frank R.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                Great Experience with Frank at Auto Haul Express! Frank made my car shipping experience smooth and stress-free. He was professional, transparent, and kept me updated throughout the process. My car arrived on time and in perfect condition, with no hidden fees. I highly recommend Frank and Auto Haul Express for reliable and efficient service.
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Nick H.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                Nick was very helpful after a less than satisfactory experience with another transportation company. He was able to find a reasonably priced transporter last minute who did an excellent job with shipping my vehicle.
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Robert M.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                Working with Robert Martinez on my car shipment was a great experience. He stayed in touch throughout the entire process, made sure the dispatch was quick, and offered a fair price. Everything went smoothly from start to finish. I’d definitely recommend Robert and would happily use his service again in the future.
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Raymond T.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                I wasn’t about to trust just anyone with my car because it was too expensive. If anything had happened to this car, it would’ve been a disaster. Thanks to Raymond and Auto Haul Express, I now have a go-to company for moving all my cars across the country. Not only did the car arrive safely, but it was delivered on time, making my daughter’s birthday gift a huge success. Thank you, Auto Haul Express! I’m definitely looking forward to using your services again.
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Tony D.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                Tony Davis at Auto Haul Express exceeded my expectations in every way when it came to shipping my vehicles. From the first point of contact, he was courteous, knowledgeable, and made me feel confident about the entire process. Tony took the time to explain all the details, including timing, pricing, and logistics, which gave me peace of mind. Throughout the shipment, he provided timely updates and was always available to answer my questions. The vehicles arrived on schedule and in perfect condition, exactly as promised. Tony's professionalism, attention to detail, and dedication to customer service made this experience completely stress-free. I would highly recommend Tony and Auto Haul Express to anyone in need of vehicle transport. You won’t be disappointed!
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Sam W.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                I recently used Auto Haul Express to ship my 2023 Chevy Malibu from Flower Mound, TX to Tempe, AZ, and I couldn't be happier with the service. Tony was professional and communicative throughout, making everything stress-free. The driver was incredibly nice and handled my car with great care. The vehicle arrived on time and in perfect condition. Auto Haul Express exceeded my expectations, and I highly recommend them for anyone needing reliable car shipping services.
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Nick G.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                Never shipped a car before; was leery of doing so. Nick was extremely professional & persistent in finding a driver, etc. to assist us, & managed to obtain exactly what we needed with a Saturday delivery. This was so much better than the Monday we were anticipating, assuming that transports wouldn't occur on a weekend. Nick was on time for both pick-up & drop off. He was also very professional & only took 30 minutes both times. As it was over a 400-mile transport, pick up was Friday with a Saturday morning drop off. Highly recommend Auto Haul Express LLC, especially if you want to save time, money, and headaches. And if you're really lucky, you'll work with Nick!!!!
+            </p>
+        </div>
+        <div class="client-review">
+            <p class="client-name">Tony P.</p>
+            <div class="rating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+            </div>
+            <p class="client-comment">
+                I was getting discouraged about hiring someone to move my car from AZ to Utah because I had read about a lot of bad experiences that people have had where they try to raise the price after picking it up and I had already paid a deposit to a company that never picked up the car but then they said they could schedule a driver for over twice the amount they had originally promised. Tony Davis at Auto Haul Express LLC kept working on it and reaching out to me and he sounded very honest and sincere so I went with him. The price was exactly what he said it would be. The vehicle was picked up and delivered right when he said and Tony and the driver both communicated well the entire time. I’m really grateful for them. Tony saved me a lot of time and money moving that vehicle.
+            </p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+      {% block extra_js %}
+
+<script>
+    $(document).ready(function(){
+        $('.clients-wrapper').slick({
+            slidesToShow: 3,  // Number of slides to show at once
+            slidesToScroll: 1, // Number of slides to scroll at a time
+            autoplay: true,    // Enable autoplay
+            autoplaySpeed: 3000, // Autoplay speed in milliseconds
+            dots: true,        // Show navigation dots
+            arrows: true,      // Show next/prev arrows
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>
+      {% endblock %}

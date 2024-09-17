@@ -1,10 +1,336 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}FAQS{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/faqs.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="banner">
+
+    <div class="banner_all">
+        <div class="banner_p">
+            <p>Reliable Logistics, Tailored for You</p>
+            <p>Experience seamless, efficient logistics solutions customized to
+                meet your needs. Explore our wide range of services, competitive pricing, shipping options, and
+                guaranteed delivery timelines.</p>
+        </div>
+        <form id="myForm" action method="post" autocomplete="off"
+              class="inputs">
+            {% csrf_token %}
+
+            <div class="tab" id="tab-1">
+                <h1 align="center">Location</h1>
+                <div style="position: relative;">
+                    <input type="text" name="pick_up_location"
+                           class="form-control" placeholder="Pick up ZIP or CITY"
+                           required id="pickup_input">
+                    <ul class="list" id="pickup_list"
+                        style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+                </div>
+
+                <div style="position: relative;">
+                    <input type="text" name="delivery_location"
+                           class="form-control" placeholder="Delivery ZIP or CITY"
+                           required id="delivery_input">
+                    <ul class="list" id="delivery_list"
+                        style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto;"></ul>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="open_enclosed" style="font-weight: bold; float: left; font-size: 80%;"><span
+                            style="color: red">*</span> Transport type</label>
+                    <div class="f_radio" style>
+                        <div class>
+                            <input type="radio" id="open" name="open_enclosed"
+                                   value="open" class="form-check-input"
+                                   style="font-size: 1px;" checked>
+                            <label for="open"
+                                   class="form-check-label text-black"
+                                   style="display: inline; margin-left: 2px; color: black;">Open</label>
+                        </div>
+                        <div class style="margin-left: 10px;">
+                            <input type="radio" id="enclosed"
+                                   name="open_enclosed" value="enclosed"
+                                   class="form-check-input"
+                                   style="font-size: 5px;">
+                            <label for="enclosed" class
+                                   style="display: inline; margin-left: 2px; color: black;">Enclosed</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="index-btn" onclick="run(1, 2);">Next</div>
+            </div>
+
+            <div class="tab" id="tab-2">
+                <h1 align="center">Vehicle Details:</h1>
+
+                <div class="autocomplete-container">
+                    <input type="text" name="make" id="make" placeholder="Type or select a make" class="form-control"
+                           required>
+                    <div id="make-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <!-- Input for model -->
+                <div class="autocomplete-container">
+                    <input type="text" name="model" id="model" placeholder="Type or select a model" class="form-control"
+                           required>
+                    <div id="model-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+
+                <!-- Input for year -->
+                <div class="autocomplete-container">
+                    <input type="text" name="year" id="year" placeholder="Type or select a year" class="form-control"
+                           required>
+                    <div id="year-suggestions" class="autocomplete-suggestions"></div>
+                </div>
+                <div class="form-group" style="margin-top: 15px">
+                    <label for="operable" style="font-weight: 700; float: left; font-size: 80%; margin-left: 10px">Is it
+                        operable?</label>
+                    <div class="f_radio">
+                        <div style="margin-right: 10px;">
+                            <input type="radio" id="yes" name="operable" value="yes" class="form-check-input" checked>
+                            <label for="yes" class="form-check-label text-black" style="margin-left: 5px;">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="no" name="operable" value="no" class="form-check-input">
+                            <label for="no" class="form-check-label text-black" style="margin-left: 5px;">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class style="display: flex;">
+                    <div class="index-btn" onclick="run(2, 1);">Previous</div>
+                    <div class="index-btn" onclick="run(2, 3);">Next</div>
+                </div>
+            </div>
+
+            <div class="tab" id="tab-3">
+                <h1 align="center">Personal Details:</h1>
+                <input type="text" name="name" class="form-control"
+                       placeholder="Full name" required>
+                <input type="email" name="email" class="form-control"
+                       placeholder="Email" required>
+                <input type="text" name="phone_number" id="phone_number"
+                       class="form-control phone_number" placeholder="Phone number" required>
+                <input type="date" name="date" class="form-control"
+                       placeholder="Date" required>
+                <div class="" style="display: flex;">
+                    <input type="checkbox" name="condition" id="condition" style="float: left; margin-bottom: auto"
+                           class="form-check-input">
+                    <label for="condition" class="" style="float: right; text-align: start; margin-left: 10px">I agree
+                        to receive text massages from Auto Haul Express LLC. Stay in the loop! Receive exclusive updates
+                        via SMS. MSG & data rates may apply. Reply 'STOP' to unsubscribe.
+                        <br><a href="{% url 'auto:policy' %}">Privacy Policy</a></label>
+                </div>
+
+                <div class="index-btn-wrapper">
+                    <div class="index-btn" onclick="run(3, 2);">Previous</div>
+                    <button class="index-btn" type="submit"
+                            style="background: blue;">Submit
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div style="text-align:center;">
+                <span class="step" id="step-1">1</span>
+                <span class="step" id="step-2">2</span>
+                <span class="step" id="step-3">3</span>
+            </div>
+        </form>
+    </div>
+
+</div>
+<section class="reviews-section fade-up">
+    <h2>Reviews From Our <span>Satisfied Customers</span></h2>
+
+    <div class="reviews-slider">
+        <div class="review-box">
+            <div class="rating-section">
+                <h3>5.0</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+            <div class="info-section">
+                <p class="company-name">Google</p>
+                <p>(2300+ Reviews)</p>
+                <img src="{% static 'img/google-r.png' %}" alt="Google Logo">
+            </div>
+        </div>
+
+        <div class="review-box">
+            <div class="rating-section">
+                <h3>5.0</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+            <div class="info-section">
+                <p class="company-name">Trustpilot</p>
+                <p>(1550+ Reviews)</p>
+                <img src="{% static 'img/trustpilot.png' %}" alt="Trustpilot Logo">
+            </div>
+        </div>
+
+        <div class="review-box">
+            <div class="rating-section">
+                <h3>5.0</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+            <div class="info-section">
+                <p class="company-name">My Moving</p>
+                <p>(1250+ Reviews)</p>
+                <img src="{% static 'img/my-moving-reviews.png' %}" alt="My Moving Logo">
+            </div>
+        </div>
+
+        <div class="review-box">
+            <div class="rating-section">
+                <h3>5.0</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                        class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="info-section">
+                <p class="company-name">Transport Reviews</p>
+                <p>(900+ Reviews)</p>
+                <img src="{% static 'img/transport-rewiews.jpg' %}" alt="Transport Reviews Logo">
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="services-section fade-up">
+    <div class="services-content container">
+        <div class="services-image fade-up">
+            <img src="{% static 'img/service_road.png' %}" alt="Services Image">
+        </div>
+        <div class="services-text">
+            <h2 class="fade-up">The type of services Road <span class="highlight">AutoHoulEx</span> offers</h2>
+            <p class="fade-up">Discover our reliable vehicle transportation services tailored to your needs. With a
+                seasoned team and a focus on care and security, we ensure a smooth journey for your vehicles, backed by
+                personalized customer support at every stage.</p>
+            <div class="services-cards">
+                <div class="service-card fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <p><span>Open auto shipping</span> – fast & affordable shipping solution.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <p><span>Enclosed auto shipping</span> – secure and safe transport.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <p><span>Door-to-Door shipping</span> – secure and safe transport.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <p><span>Driveaway Auto shipping</span> – reliable shipping services.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-ship"></i>
+                    </div>
+                    <p><span>Ship to Hawaii</span> – ship your car hassle-free.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container third_section ">
+    <p class="fade-up" style="margin-top: 100px">Why <span style="color: #0085FF ">AutoHaulExpres?</span></p>
+
+    <div class="third_card fade-up">
+        <img src="{% static 'img/Realiable.jpg' %}" alt="">
+        <div class="">
+            <p>Outstanding Reliability and Efficiency</p>
+            <span>At Auto Haul Express, we are dedicated to providing superior reliability and efficiency. With our
+                state-of-the-art logistics technology, we guarantee timely and secure vehicle transport, minimizing delays and ensuring your convenience.</span>
+        </div>
+    </div>
+
+    <div class="third_card third_c_r fade-up">
+        <div class="">
+            <p>Expert Team</p>
+            <span>Our team of highly skilled professionals brings extensive experience in vehicle transport. We use our deep
+                industry insight to manage logistics with great precision and care, ensuring exceptional service for every transport task.</span>
+        </div>
+        <br>
+        <img src="{% static 'img/expret-team.jpg' %}" alt="">
+    </div>
+
+    <div class="third_card fade-up">
+        <img src="{% static 'img/Comprehensive.jpg' %}" alt="">
+        <div class="">
+            <p>Comprehensive Range of Transport Solutions</p>
+            <span>We offer a broad array of transport services, including open and enclosed transport as well as
+                expedited options. This range allows us to meet your specific needs, whether you require standard shipping or have specialized demands.</span>
+        </div>
+    </div>
+
+    <div class="third_card third_c_r fade-up">
+        <div class="">
+            <p>Focus on Customer Satisfaction</p>
+            <span>We are dedicated to your satisfaction through clear communication, responsive support,
+                and customized solutions. Our commitment is to address your unique needs and concerns, ensuring a smooth and positive experience.</span>
+        </div>
+        <br>
+        <img src="{% static 'img/Customer-satisfaction.jpg' %}" alt="">
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+    $(document).ready(function () {
+        $('.reviews-slider').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            arrows: false,
+            dots: false,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}
